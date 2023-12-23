@@ -5,10 +5,6 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://www.google.com/recaptcha/api.js?render=<SITE_KEY>"></script>
 </head>
-<!-- Use this site key in the HTML code your site serves to users.
-6LcJXhopAAAAACcG5rKDyYQL4KiiI7IBcfy7LNxh
-Use this secret key for communication between your site and reCAPTCHA.
-6LcJXhopAAAAABz8h3I9BD4JB11YtQwzP94XRw_f -->
 <body>
 <header>
     BLOG KĄKUTEROWY
