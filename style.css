@@ -1,0 +1,83 @@
+@font-face {
+    font-family: 'MyFont';
+    src: url('Baloo.ttf') format('truetype');
+}
+
+body
+{
+    background-color: #abbedb;
+    color: wheat;
+    font-family: 'MyFont';
+}
+
+header
+{
+    background-color: #14376d;
+    width: auto;
+    height: 30px;
+    padding: 10px;
+    margin: auto;
+    text-align: center;
+}
+
+#Main
+{
+    background-color: #0c264d;
+    height: 86%;
+    width: 97%;
+    margin: auto;
+    padding: 11px;
+    position: absolute;
+    float: left;
+}
+
+#left
+{
+    background-color: #14376d;
+    height: 88%;
+    width: 15%;
+    padding: 30px;
+    float: left;
+}
+
+#right
+{
+    background-color: #14376d;
+    height: 88%;
+    width: 74%;
+    padding: 30px;
+    float: right;
+}
+
+a {
+    color: wheat;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+a:visited {
+    color: wheat;
+}
+a:active {
+    color: wheat;
+}
+
+#left_right
+{
+    background-color: #14376d;
+    height: 88%;
+    width: 15%;
+    padding: 30px;
+    float: left;
+}
+
+#double_right
+{
+    background-color: #14376d;
+    height: 88%;
+    width: 15%;
+    padding: 30px;
+    float: left;
+}
