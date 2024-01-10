@@ -12,7 +12,7 @@ body
 
 header
 {
-    background-color: #14376d;
+    background-color: #7700e6;
     width: auto;
     height: 30px;
     padding: 10px;
@@ -22,8 +22,7 @@ header
 
 #Main
 {
-    background-color: #0c264d;
-    height: 86%;
+    background-color: #c180ff;
     width: 97%;
     margin: auto;
     padding: 11px;
@@ -33,8 +32,7 @@ header
 
 #left
 {
-    background-color: #14376d;
-    height: 88%;
+    background-color: #7700e6;
     width: 15%;
     padding: 30px;
     float: left;
@@ -45,8 +43,7 @@ header
 
 #right
 {
-    background-color: #14376d;
-    height: 88%;
+    background-color: #7700e6;
     width: 74%;
     padding: 30px;
     float: right;
@@ -83,11 +80,4 @@ a:active {
     width: 15%;
     padding: 30px;
     float: left;
-}
-
-.error
-{
-    color:red;
-    margin-top: 10px;
-    margin-bottom: 10px;
 }

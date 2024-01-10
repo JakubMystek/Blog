@@ -1,3 +1,7 @@
+<?php
+	session_start();
+?>
+
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8" >
@@ -13,7 +17,7 @@
     <section id="left">
         <h1> Menu </h1>
         <dl>
-            Left
+            Kontakt
         </dl>
     </section>
     <section id="right">
@@ -24,16 +28,10 @@
             <b>Hasło:</b> <input type="password" name="haslo"><br>
             <input type="submit" value="Zaloguj" name="loguj">
         </form>
-        <?php include 'login.php'; ?>
         </section>
         <section id="double_right"></section>
-        <h1>Nie masz konta? Nic nie szkodzi, tu możesz je utworzyć:</h1>
-        <form method="POST" action="LINK2.php">
-            <b>Login:</b><br> <input type="text" name="login"><br>
-            <b>Hasło:</b><br> <input type="password" name="haslo1"><br>
-            <b>Powtórz hasło:</b><br> <input type="password" name="haslo2"><br>
-            <input type="submit" value="Utwórz konto" name="rejestruj">
-        </form>
+        <h1>Nie masz konta? <a href="register.php">Zarejestruj się</a></h1>
+
         </section>
     </section>
 </section>

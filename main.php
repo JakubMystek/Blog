@@ -1,80 +1,91 @@
 <!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8" >
+    <meta charset="UTF-8">
     <title>Mój Blog</title>
-    <style>
-        /* Ukryj wszystkie artykuły poza pierwszym */
-        article:not(:first-of-type) {
-            display: none;
+    <link rel="stylesheet" href="style_main.css">
+    <script>
+        function insertBBCode(startTag, endTag) {
+            var textarea = document.getElementById('postContent');
+            var start = textarea.selectionStart;
+            var end = textarea.selectionEnd;
+            var selectedText = textarea.value.substring(start, end);
+            var replacement = startTag + selectedText + endTag;
+            textarea.value = textarea.value.substring(0, start) + replacement + textarea.value.substring(end);
         }
-    </style>
-    <link rel="stylesheet" href="style.css">
+    </script>
 </head>
 <body>
-<?php
-// Tablica asocjacyjna zawierająca tytuły i treści wiadomości
-$wiadomosci = array(
-    array("tytul" => "Nagłówek pierwszej wiadomości", "tresc" => "Treść pierwszej wiadomości."),
-    array("tytul" => "Nagłówek drugiej wiadomości", "tresc" => "Treść drugiej wiadomości."),
-    array("tytul" => "Nagłówek trzeciej wiadomości", "tresc" => "Treść trzeciej wiadomości.")
-    // Możesz dodawać kolejne wiadomości w podobny sposób
-);
-?>
-<header>
-    BLOG KĄKUTEROWY
-</header>
-<section id="Main">
-    <section id="left">
-        <h1> Menu </h1>
-        <dl>
-            <dt><a href="main.php">Strona główna</a></dt><br>
-            <dt><a href="Gry.php">Gry</a></dt><br>
-            <dt>Kontakt</dt><br>
-        </dl>
+    <header>
+        BLOG KĄKUTEROWY
+    </header>
+    <section id="Main">
+        <section id="left">
+            <h1> Menu </h1>
+            <dl>
+                <dt><?php
+                    session_start();
+                    echo $_SESSION['login'];
+                ?></dt><br>
+                <dt><a href="main.php">Strona główna</a></dt><br>
+                <dt><a href="Gry.php">Gry</a></dt><br>
+                <dt><a href="logout.php">Wyloguj się</a></dt><br>
+                <dt>Kontakt</dt><br>
+            </dl>
+        </section>
+        <section id="right">
+            <form action="dodaj_wpis.php" method="post">
+                <label>Tytuł:</label><br>
+                <input type="text" name="tytul"><br>
+                <label>Treść:</label><br>
+                <textarea name="tresc" id="postContent" rows="4" cols="50"></textarea><br>
+                <button type="button" onclick="insertBBCode('[b]', '[/b]')"><b>B</b></button>
+                <button type="button" onclick="insertBBCode('[i]', '[/i]')"><i>I</i></button>
+                <button type="button" onclick="insertBBCode('[u]', '[/u]')"><u>U</u></button><br>
+                <input type="submit" value="Dodaj wpis">
+            </form>
+            
+            <?php
+            function bbcode_to_html($bbtext) {
+                $bbtags = array(
+                    '[b]' => '<strong>',
+                    '[/b]' => '</strong>',
+                    '[i]' => '<em>',
+                    '[/i]' => '</em>',
+                    '[u]' => '<u>',
+                    '[/u]' => '</u>',
+                    // Dodaj inne znaczniki BBCode wraz z ich odpowiednikami HTML
+                );
+
+                return str_replace(array_keys($bbtags), array_values($bbtags), $bbtext);
+            }
+
+            require_once "connect.php";
+            echo "<br><br>";
+            $conn = new mysqli($servername, $username, $password, $dbname);
+
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+            $sql = "SELECT id, tytul, tresc, data_publikacji FROM wpisy ORDER BY data_publikacji DESC";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo "<h2>" . $row["tytul"] . "</h2>";
+                    // Konwertuj treść BBCode na HTML przed wyświetleniem
+                    $tresc_html = bbcode_to_html($row["tresc"]);
+                    echo "<p>" . $tresc_html . "</p>";
+                    echo "<p>Data publikacji: " . $row["data_publikacji"] . "</p>";
+                    echo "<hr>";
+                }
+            } else {
+                echo "Brak wpisów.";
+            }
+
+            $conn->close();
+            ?>
+        </section>
     </section>
-    <section id="right">
-    <article>
-    <h2><?php echo $wiadomosci[0]['tytul']; ?></h2>
-    <p><?php echo $wiadomosci[0]['tresc']; ?></p>
-</article>
-
-<!-- Przycisk do przełączania między wiadomościami -->
-<button id="nextButton">Następna wiadomość</button>
-
-<script>
-    // Pobierz wszystkie artykuły
-    const articles = document.querySelectorAll('article');
-    let currentArticle = 0;
-
-    // Ukryj wszystkie artykuły poza pierwszym
-    function hideAllArticles() {
-        articles.forEach(article => {
-            article.style.display = 'none';
-        });
-    }
-
-    // Funkcja wywoływana po kliknięciu przycisku
-    document.getElementById('nextButton').addEventListener('click', function() {
-        // Ukryj aktualny artykuł
-        articles[currentArticle].style.display = 'none';
-
-        // Przełącz do kolejnego artykułu
-        currentArticle++;
-
-        // Jeśli przekroczono ilość artykułów, wróć do pierwszego
-        if (currentArticle >= articles.length) {
-            currentArticle = 0;
-        }
-
-        // Wyświetl kolejny artykuł
-        articles[currentArticle].style.display = 'block';
-    });
-
-    // Ukryj wszystkie artykuły poza pierwszym na starcie
-    hideAllArticles();
-    articles[0].style.display = 'block';
-</script>
-    </section>
-</section>
 </body>
 </html>

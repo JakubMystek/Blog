@@ -121,7 +121,7 @@ if (isset($_POST['dobierz'])) {
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
-    <a href="Gry.php">Cofnij</a>
+    <a href="Gry.php">Powrót do strony głównej</a>
             </section>
 </body>
 </html>
