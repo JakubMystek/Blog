@@ -54,7 +54,6 @@
                     '[/i]' => '</em>',
                     '[u]' => '<u>',
                     '[/u]' => '</u>',
-                    // Dodaj inne znaczniki BBCode wraz z ich odpowiednikami HTML
                 );
 
                 return str_replace(array_keys($bbtags), array_values($bbtags), $bbtext);
@@ -67,16 +66,16 @@
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
             }
-            $sql = "SELECT id, tytul, tresc, data_publikacji FROM wpisy ORDER BY data_publikacji DESC";
+            $sql = "SELECT wpisy.id, wpisy.tytul, wpisy.tresc, wpisy.data_publikacji, uzytkownicy.user FROM wpisy JOIN uzytkownicy ON wpisy.id_autora = uzytkownicy.id ORDER BY data_publikacji DESC";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     echo "<h2>" . $row["tytul"] . "</h2>";
-                    // Konwertuj treść BBCode na HTML przed wyświetleniem
                     $tresc_html = bbcode_to_html($row["tresc"]);
                     echo "<p>" . $tresc_html . "</p>";
                     echo "<p>Data publikacji: " . $row["data_publikacji"] . "</p>";
+                    echo "<p>Autor: " . $row["user"] . "</p>";
                     echo "<hr>";
                 }
             } else {

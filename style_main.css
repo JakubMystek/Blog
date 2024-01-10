@@ -1,4 +1,4 @@
-@font-face {
+    @font-face {
     font-family: 'MyFont';
     src: url('Baloo.ttf') format('truetype');
 }
@@ -12,7 +12,7 @@ body
 
 header
 {
-    background-color: #7700e6;
+    background-color: #14376d;
     width: auto;
     height: 30px;
     padding: 10px;
@@ -22,7 +22,7 @@ header
 
 #Main
 {
-    background-color: #c180ff;
+    background-color: #0c264d;
     width: 97%;
     margin: auto;
     padding: 11px;
@@ -32,7 +32,7 @@ header
 
 #left
 {
-    background-color: #7700e6;
+    background-color: #14376d;
     width: 15%;
     padding: 30px;
     float: left;
@@ -43,7 +43,7 @@ header
 
 #right
 {
-    background-color: #7700e6;
+    background-color: #14376d;
     width: 74%;
     padding: 30px;
     float: right;
