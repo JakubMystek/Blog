@@ -25,12 +25,14 @@
             <dl>
                 <dt><?php
                     session_start();
+                    if($_SESSION['login'] == null)
+                    {header('Location: index.php');}
                     echo $_SESSION['login'];
                 ?></dt><br>
                 <dt><a href="main.php">Strona główna</a></dt><br>
                 <dt><a href="Gry.php">Gry</a></dt><br>
                 <dt><a href="logout.php">Wyloguj się</a></dt><br>
-                <dt>Kontakt</dt><br>
+                <dt><a href="contact.php">Kontakt</a></dt><br>
             </dl>
         </section>
         <section id="right">

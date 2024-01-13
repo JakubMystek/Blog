@@ -17,7 +17,7 @@
     <section id="left">
         <h1> Menu </h1>
         <dl>
-            Kontakt
+        <dt><a href="contact.php">Kontakt</a></dt><br>
         </dl>
     </section>
     <section id="right">

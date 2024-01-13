@@ -148,7 +148,8 @@
     <section id="left">
         <h1> Menu </h1>
         <dl>
-        <a href="index.php">Zaloguj się</a>
+        <dt><a href="index.php">Zaloguj się</a></dt><br>
+		<dt><a href="contact.php">Kontakt</a></dt><br>
         </dl>
     </section>
     <section id="right">
