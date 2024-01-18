@@ -1,106 +1,91 @@
-const memoryGame = {
-    tileCount : 20, //liczba klocków
-    tileOnRow : 5, //liczba klocków na rząd
-    divBoard : null, //div z planszą gry
-    divScore : null, //div z wynikiem gry
-    tiles : [], //tutaj trafi wymieszana tablica klocków
-    tilesChecked : [], //zaznaczone klocki
-    moveCount : 0, //liczba ruchów
-    tilesImg : [ //grafiki dla klocków
-        "images/element1.png",
-        "images/element2.png",
-        "images/element3.png",
-        "images/element4.png",
-        "images/element5.png",
-        "images/element6.png",
-        "images/element7.png",
-        "images/element8.png",
-        "images/element9.png",
-        "images/element10.png"
+const MemoryGame = {
+    tileCount: 20,
+    tileOnRow: 5,
+    board: null,
+    scoreDisplay: null,
+    tiles: [],
+    checkedTiles: [],
+    moveCount: 0,
+    images: [
+        "images/1.jpg", "images/2.jpg", "images/3.jpg", "images/4.jpg", "images/5.jpg",
+        "images/6.jpg", "images/7.jpg", "images/8.jpg", "images/9.jpg", "images/10.jpg"
     ],
-    canGet : true, //czy można klikać na kafelki
-    tilePairs : 0, //liczba dopasowanych kafelków
+    canSelect: true,
+    matchedPairs: 0,
 
     tileClick(e) {
-        if (this.canGet) {
-            //jeżeli jeszcze nie pobraliśmy 1 elementu
-            //lub jeżeli index tego elementu nie istnieje w pobranych...
-            if (!this.tilesChecked[0] || (this.tilesChecked[0].dataset.index !== e.target.dataset.index)) {
-                this.tilesChecked.push(e.target);
-                e.target.style.backgroundImage = `url(${this.tilesImg[e.target.dataset.cardType]})`;
+        if (this.canSelect) {
+            const selectedTile = e.target;
+
+            if (!this.checkedTiles[0] || (this.checkedTiles[0].dataset.index !== selectedTile.dataset.index)) {
+                this.checkedTiles.push(selectedTile);
+                selectedTile.style.backgroundImage = `url(${this.images[selectedTile.dataset.cardType]})`;
             }
 
-            if (this.tilesChecked.length === 2) {
-                this.canGet = false;
+            if (this.checkedTiles.length === 2) {
+                this.canSelect = false;
 
-                if (this.tilesChecked[0].dataset.cardType === this.tilesChecked[1].dataset.cardType) {
-                    setTimeout(() => this.deleteTiles(), 500);
-                } else {
-                    setTimeout(() => this.resetTiles(), 500);
-                }
+                setTimeout(() => {
+                    this.checkedTiles[0].dataset.cardType === this.checkedTiles[1].dataset.cardType
+                        ? this.deleteTiles()
+                        : this.resetTiles();
+
+                }, 500);
 
                 this.moveCount++;
-                this.divScore.innerText = this.moveCount;
+                this.scoreDisplay.innerText = this.moveCount;
             }
         }
     },
 
     deleteTiles() {
-        this.tilesChecked.forEach(el => {
+        this.checkedTiles.forEach(tile => {
             const emptyDiv = document.createElement("div");
-            el.after(emptyDiv);
-            el.remove();
+            tile.after(emptyDiv);
+            tile.remove();
         });
 
-        this.canGet = true;
-        this.tilesChecked = [];
+        this.canSelect = true;
+        this.checkedTiles = [];
+        this.matchedPairs++;
 
-        this.tilePairs++;
-
-        if (this.tilePairs >= this.tileCount / 2) {
-            alert("Udało ci się odgadnąć wszystkie obrazki");
+        if (this.matchedPairs >= this.tileCount / 2) {
+            alert("Gratulacje, wygrałeś!");
         }
     },
 
     resetTiles() {
-        this.tilesChecked.forEach(el => el.style.backgroundImage = "");
-        this.tilesChecked = [];
-        this.canGet = true;
+        this.checkedTiles.forEach(tile => tile.style.backgroundImage = "");
+        this.checkedTiles = [];
+        this.canSelect = true;
     },
 
     startGame() {
-        //czyścimy planszę
-        this.divBoard = document.querySelector(".game-board");
-        this.divBoard.innerHTML = "";
+        this.board = document.querySelector(".game-board");
+        this.board.innerHTML = "";
 
-        //czyścimy planszę z ruchami
-        this.divScore = document.querySelector(".game-score");
-        this.divScore.innerHTML = 0;
+        this.scoreDisplay = document.querySelector(".game-score");
+        this.scoreDisplay.innerText = 0;
 
-        //czyścimy zmienne (bo gra może się zacząć ponownie)
         this.tiles = [];
-        this.tilesChecked = [];
+        this.checkedTiles = [];
         this.moveCount = 0;
-        this.canGet = true;
-        this.tilePairs = 0;
+        this.canSelect = true;
+        this.matchedPairs = 0;
 
-        //generujemy tablicę numerów klocków (parami)
-        for (let i=0; i<this.tileCount; i++) {
-            this.tiles.push(Math.floor(i/2));
+        for (let i = 0; i < this.tileCount; i++) {
+            this.tiles.push(Math.floor(i / 2));
         }
 
-        //i ją mieszamy
-        for (let i=this.tileCount-1; i>0; i--) {
-            const swap = Math.floor(Math.random()*i);
-            const tmp = this.tiles[i];
-            this.tiles[i] = this.tiles[swap];
-            this.tiles[swap] = tmp;
+        for (let i = this.tileCount - 1; i > 0; i--) {
+            const swap = Math.floor(Math.random() * i);
+            [this.tiles[i], this.tiles[swap]] = [this.tiles[swap], this.tiles[i]];
         }
 
-        for (let i=0; i<this.tileCount; i++) {
+        for (let i = 0; i < this.tileCount; i++) {
             const tile = document.createElement("div");
             tile.classList.add("game-tile");
-            this.divBoard.appendChild(tile);
+            this.board.appendChild(tile);
 
             tile.dataset.cardType = this.tiles[i];
             tile.dataset.index = i;
@@ -112,5 +97,5 @@ const memoryGame = {
 
 document.addEventListener("DOMContentLoaded", () => {
     const startBtn = document.querySelector(".game-start");
-    startBtn.addEventListener("click", e => memoryGame.startGame());
+    startBtn.addEventListener("click", () => MemoryGame.startGame());
 });
