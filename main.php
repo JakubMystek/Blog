@@ -33,6 +33,10 @@
                 <dt><a href="Gry.php">Gry</a></dt><br>
                 <dt><a href="logout.php">Wyloguj się</a></dt><br>
                 <dt><a href="contact.php">Kontakt</a></dt><br>
+                <dt><?php
+                    if($_SESSION['login'] == 'admin')
+                    echo '<a href="admin.php">Panel administracyjny</a></dt><br>';
+                    ?>
             </dl>
         </section>
         <section id="right">
@@ -43,7 +47,7 @@
                 <textarea name="tresc" id="postContent" rows="4" cols="50"></textarea><br>
                 <button type="button" onclick="insertBBCode('[b]', '[/b]')"><b>B</b></button>
                 <button type="button" onclick="insertBBCode('[i]', '[/i]')"><i>I</i></button>
-                <button type="button" onclick="insertBBCode('[u]', '[/u]')"><u>U</u></button><br>
+                <button type="button" onclick="insertBBCode('[u]', '[/u]')"><u>U</u></button>
                 <input type="submit" value="Dodaj wpis">
             </form>
             
@@ -78,6 +82,24 @@
                     echo "<p>" . $tresc_html . "</p>";
                     echo "<p>Data publikacji: " . $row["data_publikacji"] . "</p>";
                     echo "<p>Autor: " . $row["user"] . "</p>";
+                    
+                    
+                    if($_SESSION['login'] == 'admin' || $_SESSION['login'] == $row["user"])
+                    {
+                    echo "<form action='usun.php' method='POST'>";
+                    echo "<input type='hidden' name='post_id' value='" . $row['id'] . "'>";
+                    echo "<input type='submit' value='Usun wpis'>";
+                    echo "</form>";
+                    }
+                    if($_SESSION['login'] == $row["user"])
+                    {
+                    echo "<form action='edytuj.php' method='POST'>";
+                    echo "<input type='hidden' name='post_id' value='" . $row['id'] . "'>";
+                    echo "<input type='submit' value='Edytuj wpis'>";
+                    echo "</form>";
+                    }
+
+
                     echo "<hr>";
                 }
             } else {

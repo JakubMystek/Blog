@@ -1,13 +1,14 @@
 <?php
 	session_start();
+    
 ?>
 
 <!DOCTYPE html>
 <head>
+    <script src="https://www.google.com/recaptcha/enterprise.js?render=6LeanVUpAAAAAMHSyHsjgGeDRT2-G6SGrZwlNLdE"></script>
     <meta charset="UTF-8" >
     <title>Mój Blog</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://www.google.com/recaptcha/api.js?render=<SITE_KEY>"></script>
 </head>
 <body>
 <header>
@@ -28,6 +29,14 @@
             <b>Hasło:</b> <input type="password" name="haslo"><br>
             <input type="submit" value="Zaloguj" name="loguj">
         </form>
+        <script>
+            function onClick(e) {
+                e.preventDefault();
+                grecaptcha.enterprise.ready(async () => {
+                    const token = await grecaptcha.enterprise.execute('6LeanVUpAAAAAMHSyHsjgGeDRT2-G6SGrZwlNLdE', {action: 'LOGIN'});
+                });
+            }
+        </script>
         </section>
         <section id="double_right"></section>
         <h1>Nie masz konta? <a href="register.php">Zarejestruj się</a></h1>

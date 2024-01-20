@@ -12,16 +12,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         session_start();
         $login = $_SESSION['login'];
 
-        // Pobranie id autora na podstawie nazwy użytkownika
         $query = "SELECT id FROM uzytkownicy WHERE user = '$login'";
         $result = $conn->query($query);
 
         if ($result) {
-            // Pobranie wyniku zapytania
             $row = $result->fetch_assoc();
             $id_autora = $row['id'];
 
-            // Wstawienie wpisu z właściwym id_autora
             $sql = "INSERT INTO wpisy (tytul, tresc, id_autora) VALUES ('$tytul', '$tresc', '$id_autora')";
 
             if ($conn->query($sql) === TRUE) {

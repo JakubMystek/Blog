@@ -133,11 +133,11 @@
 <!DOCTYPE HTML>
 <html lang="pl">
 <head>
+	<script src="https://www.google.com/recaptcha/enterprise.js?render=6LeanVUpAAAAAMHSyHsjgGeDRT2-G6SGrZwlNLdE"></script>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<title>Mój Blog</title>
     <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
@@ -155,6 +155,14 @@
     <section id="right">
         <section id="left_right">
             <h1>Zarejetruj się:</h1>
+			<script>
+            function onClick(e) {
+                e.preventDefault();
+                grecaptcha.enterprise.ready(async () => {
+                    const token = await grecaptcha.enterprise.execute('6LeanVUpAAAAAMHSyHsjgGeDRT2-G6SGrZwlNLdE', {action: 'LOGIN'});
+                });
+            }
+        </script>
 	<form method="post">
 	
 		Nickname: <br /> <input type="text" value="<?php
