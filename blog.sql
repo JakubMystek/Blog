@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sty 10, 2024 at 04:04 PM
+-- Generation Time: Sty 24, 2024 at 08:19 PM
 -- Wersja serwera: 10.4.28-MariaDB
 -- Wersja PHP: 8.2.4
 
@@ -39,9 +39,9 @@ CREATE TABLE `uzytkownicy` (
 --
 
 INSERT INTO `uzytkownicy` (`id`, `user`, `pass`, `email`) VALUES
-(13, 'admin', 'admin', 'admin@admin.com'),
-(15, 'kuba', 'kuba', 'kuba@kuba.com'),
-(16, 'julia', 'julia', 'julia@julia.com');
+(8, 'admin', 'admin', 'admin@admin.com'),
+(12, 'kuba', 'kuba', 'kuba@kuba.com'),
+(13, 'julia', 'julia', 'julia@julia.com');
 
 -- --------------------------------------------------------
 
@@ -62,10 +62,9 @@ CREATE TABLE `wpisy` (
 --
 
 INSERT INTO `wpisy` (`id`, `tytul`, `tresc`, `data_publikacji`, `id_autora`) VALUES
-(33, 'Pierwszy Post', 'Witam na forum', '2024-01-10 14:55:07', 15),
-(34, 'Powitnie', '[b]Cześć[/b], jestem tu nowa', '2024-01-10 14:56:21', 16),
-(35, 'Ogłoszenie', '[b]Uwaga! [/b] [i]Post informacyjny [/i] [u]to i tamto[/u]', '2024-01-10 14:57:18', 13),
-(36, 'Witam', 'Dzień dobry wszystkim!', '2024-01-10 15:00:12', 13);
+(11, 'Powitanie!', 'Witam! [b][i][u]Jestem Adminem![/u][/i][/b]', '2024-01-24 19:13:48', 8),
+(12, 'Mój pierwszy post', 'Dzień dobry', '2024-01-24 19:15:19', 12),
+(14, 'Hej', '[i]Hej[/i]', '2024-01-24 19:18:41', 13);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -82,7 +81,7 @@ ALTER TABLE `uzytkownicy`
 --
 ALTER TABLE `wpisy`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_autora` (`id_autora`);
+  ADD KEY `fk_wpisy_uzytkownicy` (`id_autora`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -92,13 +91,13 @@ ALTER TABLE `wpisy`
 -- AUTO_INCREMENT for table `uzytkownicy`
 --
 ALTER TABLE `uzytkownicy`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `wpisy`
 --
 ALTER TABLE `wpisy`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables
@@ -108,7 +107,7 @@ ALTER TABLE `wpisy`
 -- Constraints for table `wpisy`
 --
 ALTER TABLE `wpisy`
-  ADD CONSTRAINT `wpisy_ibfk_1` FOREIGN KEY (`id_autora`) REFERENCES `uzytkownicy` (`id`);
+  ADD CONSTRAINT `fk_wpisy_uzytkownicy` FOREIGN KEY (`id_autora`) REFERENCES `uzytkownicy` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
